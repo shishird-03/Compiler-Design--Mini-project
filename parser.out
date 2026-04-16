@@ -1,0 +1,460 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> DATATYPE MAIN LPAR RPAR BEGIN stmtblock END
+Rule 2     stmtblock -> stmt stmtblock
+Rule 3     stmtblock -> <empty>
+Rule 4     stmt -> decl
+Rule 5     stmt -> assign
+Rule 6     stmt -> whilestmt
+Rule 7     stmt -> returnstmt
+Rule 8     decl -> DATATYPE ID ASSIGNOP NUMBER SEMI
+Rule 9     assign -> ID ASSIGNOP expr SEMI
+Rule 10    expr -> ID PLUS NUMBER
+Rule 11    expr -> ID DIV NUMBER
+Rule 12    expr -> NUMBER
+Rule 13    expr -> ID
+Rule 14    whilestmt -> WHILE LPAR cond RPAR stmtblock END WHILE
+Rule 15    cond -> ID GT NUMBER
+Rule 16    returnstmt -> RETURN ID SEMI
+
+Terminals, with rules where they appear
+
+ASSIGNOP             : 8 9
+BEGIN                : 1
+DATATYPE             : 1 8
+DIV                  : 11
+END                  : 1 14
+GT                   : 15
+ID                   : 8 9 10 11 13 15 16
+LPAR                 : 1 14
+MAIN                 : 1
+NUMBER               : 8 10 11 12 15
+PLUS                 : 10
+RETURN               : 16
+RPAR                 : 1 14
+SEMI                 : 8 9 16
+WHILE                : 14 14
+error                : 
+
+Nonterminals, with rules where they appear
+
+assign               : 5
+cond                 : 14
+decl                 : 4
+expr                 : 9
+program              : 0
+returnstmt           : 7
+stmt                 : 2
+stmtblock            : 1 2 14
+whilestmt            : 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . DATATYPE MAIN LPAR RPAR BEGIN stmtblock END
+
+    DATATYPE        shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> DATATYPE . MAIN LPAR RPAR BEGIN stmtblock END
+
+    MAIN            shift and go to state 3
+
+
+state 3
+
+    (1) program -> DATATYPE MAIN . LPAR RPAR BEGIN stmtblock END
+
+    LPAR            shift and go to state 4
+
+
+state 4
+
+    (1) program -> DATATYPE MAIN LPAR . RPAR BEGIN stmtblock END
+
+    RPAR            shift and go to state 5
+
+
+state 5
+
+    (1) program -> DATATYPE MAIN LPAR RPAR . BEGIN stmtblock END
+
+    BEGIN           shift and go to state 6
+
+
+state 6
+
+    (1) program -> DATATYPE MAIN LPAR RPAR BEGIN . stmtblock END
+    (2) stmtblock -> . stmt stmtblock
+    (3) stmtblock -> .
+    (4) stmt -> . decl
+    (5) stmt -> . assign
+    (6) stmt -> . whilestmt
+    (7) stmt -> . returnstmt
+    (8) decl -> . DATATYPE ID ASSIGNOP NUMBER SEMI
+    (9) assign -> . ID ASSIGNOP expr SEMI
+    (14) whilestmt -> . WHILE LPAR cond RPAR stmtblock END WHILE
+    (16) returnstmt -> . RETURN ID SEMI
+
+    END             reduce using rule 3 (stmtblock -> .)
+    DATATYPE        shift and go to state 7
+    ID              shift and go to state 14
+    WHILE           shift and go to state 15
+    RETURN          shift and go to state 16
+
+    stmtblock                      shift and go to state 8
+    stmt                           shift and go to state 9
+    decl                           shift and go to state 10
+    assign                         shift and go to state 11
+    whilestmt                      shift and go to state 12
+    returnstmt                     shift and go to state 13
+
+state 7
+
+    (8) decl -> DATATYPE . ID ASSIGNOP NUMBER SEMI
+
+    ID              shift and go to state 17
+
+
+state 8
+
+    (1) program -> DATATYPE MAIN LPAR RPAR BEGIN stmtblock . END
+
+    END             shift and go to state 18
+
+
+state 9
+
+    (2) stmtblock -> stmt . stmtblock
+    (2) stmtblock -> . stmt stmtblock
+    (3) stmtblock -> .
+    (4) stmt -> . decl
+    (5) stmt -> . assign
+    (6) stmt -> . whilestmt
+    (7) stmt -> . returnstmt
+    (8) decl -> . DATATYPE ID ASSIGNOP NUMBER SEMI
+    (9) assign -> . ID ASSIGNOP expr SEMI
+    (14) whilestmt -> . WHILE LPAR cond RPAR stmtblock END WHILE
+    (16) returnstmt -> . RETURN ID SEMI
+
+    END             reduce using rule 3 (stmtblock -> .)
+    DATATYPE        shift and go to state 7
+    ID              shift and go to state 14
+    WHILE           shift and go to state 15
+    RETURN          shift and go to state 16
+
+    stmt                           shift and go to state 9
+    stmtblock                      shift and go to state 19
+    decl                           shift and go to state 10
+    assign                         shift and go to state 11
+    whilestmt                      shift and go to state 12
+    returnstmt                     shift and go to state 13
+
+state 10
+
+    (4) stmt -> decl .
+
+    DATATYPE        reduce using rule 4 (stmt -> decl .)
+    ID              reduce using rule 4 (stmt -> decl .)
+    WHILE           reduce using rule 4 (stmt -> decl .)
+    RETURN          reduce using rule 4 (stmt -> decl .)
+    END             reduce using rule 4 (stmt -> decl .)
+
+
+state 11
+
+    (5) stmt -> assign .
+
+    DATATYPE        reduce using rule 5 (stmt -> assign .)
+    ID              reduce using rule 5 (stmt -> assign .)
+    WHILE           reduce using rule 5 (stmt -> assign .)
+    RETURN          reduce using rule 5 (stmt -> assign .)
+    END             reduce using rule 5 (stmt -> assign .)
+
+
+state 12
+
+    (6) stmt -> whilestmt .
+
+    DATATYPE        reduce using rule 6 (stmt -> whilestmt .)
+    ID              reduce using rule 6 (stmt -> whilestmt .)
+    WHILE           reduce using rule 6 (stmt -> whilestmt .)
+    RETURN          reduce using rule 6 (stmt -> whilestmt .)
+    END             reduce using rule 6 (stmt -> whilestmt .)
+
+
+state 13
+
+    (7) stmt -> returnstmt .
+
+    DATATYPE        reduce using rule 7 (stmt -> returnstmt .)
+    ID              reduce using rule 7 (stmt -> returnstmt .)
+    WHILE           reduce using rule 7 (stmt -> returnstmt .)
+    RETURN          reduce using rule 7 (stmt -> returnstmt .)
+    END             reduce using rule 7 (stmt -> returnstmt .)
+
+
+state 14
+
+    (9) assign -> ID . ASSIGNOP expr SEMI
+
+    ASSIGNOP        shift and go to state 20
+
+
+state 15
+
+    (14) whilestmt -> WHILE . LPAR cond RPAR stmtblock END WHILE
+
+    LPAR            shift and go to state 21
+
+
+state 16
+
+    (16) returnstmt -> RETURN . ID SEMI
+
+    ID              shift and go to state 22
+
+
+state 17
+
+    (8) decl -> DATATYPE ID . ASSIGNOP NUMBER SEMI
+
+    ASSIGNOP        shift and go to state 23
+
+
+state 18
+
+    (1) program -> DATATYPE MAIN LPAR RPAR BEGIN stmtblock END .
+
+    $end            reduce using rule 1 (program -> DATATYPE MAIN LPAR RPAR BEGIN stmtblock END .)
+
+
+state 19
+
+    (2) stmtblock -> stmt stmtblock .
+
+    END             reduce using rule 2 (stmtblock -> stmt stmtblock .)
+
+
+state 20
+
+    (9) assign -> ID ASSIGNOP . expr SEMI
+    (10) expr -> . ID PLUS NUMBER
+    (11) expr -> . ID DIV NUMBER
+    (12) expr -> . NUMBER
+    (13) expr -> . ID
+
+    ID              shift and go to state 24
+    NUMBER          shift and go to state 26
+
+    expr                           shift and go to state 25
+
+state 21
+
+    (14) whilestmt -> WHILE LPAR . cond RPAR stmtblock END WHILE
+    (15) cond -> . ID GT NUMBER
+
+    ID              shift and go to state 28
+
+    cond                           shift and go to state 27
+
+state 22
+
+    (16) returnstmt -> RETURN ID . SEMI
+
+    SEMI            shift and go to state 29
+
+
+state 23
+
+    (8) decl -> DATATYPE ID ASSIGNOP . NUMBER SEMI
+
+    NUMBER          shift and go to state 30
+
+
+state 24
+
+    (10) expr -> ID . PLUS NUMBER
+    (11) expr -> ID . DIV NUMBER
+    (13) expr -> ID .
+
+    PLUS            shift and go to state 31
+    DIV             shift and go to state 32
+    SEMI            reduce using rule 13 (expr -> ID .)
+
+
+state 25
+
+    (9) assign -> ID ASSIGNOP expr . SEMI
+
+    SEMI            shift and go to state 33
+
+
+state 26
+
+    (12) expr -> NUMBER .
+
+    SEMI            reduce using rule 12 (expr -> NUMBER .)
+
+
+state 27
+
+    (14) whilestmt -> WHILE LPAR cond . RPAR stmtblock END WHILE
+
+    RPAR            shift and go to state 34
+
+
+state 28
+
+    (15) cond -> ID . GT NUMBER
+
+    GT              shift and go to state 35
+
+
+state 29
+
+    (16) returnstmt -> RETURN ID SEMI .
+
+    DATATYPE        reduce using rule 16 (returnstmt -> RETURN ID SEMI .)
+    ID              reduce using rule 16 (returnstmt -> RETURN ID SEMI .)
+    WHILE           reduce using rule 16 (returnstmt -> RETURN ID SEMI .)
+    RETURN          reduce using rule 16 (returnstmt -> RETURN ID SEMI .)
+    END             reduce using rule 16 (returnstmt -> RETURN ID SEMI .)
+
+
+state 30
+
+    (8) decl -> DATATYPE ID ASSIGNOP NUMBER . SEMI
+
+    SEMI            shift and go to state 36
+
+
+state 31
+
+    (10) expr -> ID PLUS . NUMBER
+
+    NUMBER          shift and go to state 37
+
+
+state 32
+
+    (11) expr -> ID DIV . NUMBER
+
+    NUMBER          shift and go to state 38
+
+
+state 33
+
+    (9) assign -> ID ASSIGNOP expr SEMI .
+
+    DATATYPE        reduce using rule 9 (assign -> ID ASSIGNOP expr SEMI .)
+    ID              reduce using rule 9 (assign -> ID ASSIGNOP expr SEMI .)
+    WHILE           reduce using rule 9 (assign -> ID ASSIGNOP expr SEMI .)
+    RETURN          reduce using rule 9 (assign -> ID ASSIGNOP expr SEMI .)
+    END             reduce using rule 9 (assign -> ID ASSIGNOP expr SEMI .)
+
+
+state 34
+
+    (14) whilestmt -> WHILE LPAR cond RPAR . stmtblock END WHILE
+    (2) stmtblock -> . stmt stmtblock
+    (3) stmtblock -> .
+    (4) stmt -> . decl
+    (5) stmt -> . assign
+    (6) stmt -> . whilestmt
+    (7) stmt -> . returnstmt
+    (8) decl -> . DATATYPE ID ASSIGNOP NUMBER SEMI
+    (9) assign -> . ID ASSIGNOP expr SEMI
+    (14) whilestmt -> . WHILE LPAR cond RPAR stmtblock END WHILE
+    (16) returnstmt -> . RETURN ID SEMI
+
+    END             reduce using rule 3 (stmtblock -> .)
+    DATATYPE        shift and go to state 7
+    ID              shift and go to state 14
+    WHILE           shift and go to state 15
+    RETURN          shift and go to state 16
+
+    stmtblock                      shift and go to state 39
+    stmt                           shift and go to state 9
+    decl                           shift and go to state 10
+    assign                         shift and go to state 11
+    whilestmt                      shift and go to state 12
+    returnstmt                     shift and go to state 13
+
+state 35
+
+    (15) cond -> ID GT . NUMBER
+
+    NUMBER          shift and go to state 40
+
+
+state 36
+
+    (8) decl -> DATATYPE ID ASSIGNOP NUMBER SEMI .
+
+    DATATYPE        reduce using rule 8 (decl -> DATATYPE ID ASSIGNOP NUMBER SEMI .)
+    ID              reduce using rule 8 (decl -> DATATYPE ID ASSIGNOP NUMBER SEMI .)
+    WHILE           reduce using rule 8 (decl -> DATATYPE ID ASSIGNOP NUMBER SEMI .)
+    RETURN          reduce using rule 8 (decl -> DATATYPE ID ASSIGNOP NUMBER SEMI .)
+    END             reduce using rule 8 (decl -> DATATYPE ID ASSIGNOP NUMBER SEMI .)
+
+
+state 37
+
+    (10) expr -> ID PLUS NUMBER .
+
+    SEMI            reduce using rule 10 (expr -> ID PLUS NUMBER .)
+
+
+state 38
+
+    (11) expr -> ID DIV NUMBER .
+
+    SEMI            reduce using rule 11 (expr -> ID DIV NUMBER .)
+
+
+state 39
+
+    (14) whilestmt -> WHILE LPAR cond RPAR stmtblock . END WHILE
+
+    END             shift and go to state 41
+
+
+state 40
+
+    (15) cond -> ID GT NUMBER .
+
+    RPAR            reduce using rule 15 (cond -> ID GT NUMBER .)
+
+
+state 41
+
+    (14) whilestmt -> WHILE LPAR cond RPAR stmtblock END . WHILE
+
+    WHILE           shift and go to state 42
+
+
+state 42
+
+    (14) whilestmt -> WHILE LPAR cond RPAR stmtblock END WHILE .
+
+    DATATYPE        reduce using rule 14 (whilestmt -> WHILE LPAR cond RPAR stmtblock END WHILE .)
+    ID              reduce using rule 14 (whilestmt -> WHILE LPAR cond RPAR stmtblock END WHILE .)
+    WHILE           reduce using rule 14 (whilestmt -> WHILE LPAR cond RPAR stmtblock END WHILE .)
+    RETURN          reduce using rule 14 (whilestmt -> WHILE LPAR cond RPAR stmtblock END WHILE .)
+    END             reduce using rule 14 (whilestmt -> WHILE LPAR cond RPAR stmtblock END WHILE .)
+
