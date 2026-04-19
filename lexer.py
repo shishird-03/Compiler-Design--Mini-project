@@ -1,8 +1,5 @@
 import re
-
-
 def tokenize(code):
-
     keywords = {
         "int": "DATATYPE",
         "char": "DATATYPE",
@@ -12,7 +9,6 @@ def tokenize(code):
         "end": "END",
         "return": "RETURN"
     }
-
     symbols = {
         "(": "LPAR",
         ")": "RPAR",
@@ -23,20 +19,13 @@ def tokenize(code):
         "=": "ASSIGNOP",
         ">": "GT"
     }
-
     tokens = []
-
     lines = code.split("\n")
-
     print("\nTOKENS GENERATED:\n")
-
     for line_no, line in enumerate(lines, start=1):
-
         # Updated regex to include all operators
         words = re.findall(r'\w+|[()=;+\-/>]', line)
-
         col = 1
-
         for word in words:
 
             if word in keywords:
@@ -56,5 +45,4 @@ def tokenize(code):
             tokens.append(token)
 
             col += len(word)
-
     return tokens

@@ -1,11 +1,7 @@
 def compute_first(grammar):
-
     first = {nt: set() for nt in grammar}
-
     changed = True
-
     while changed:
-
         changed = False
 
         for nt in grammar:
@@ -23,8 +19,6 @@ def compute_first(grammar):
                             changed = True
 
                         break
-
-
                     elif symbol not in grammar:
 
                         if symbol not in first[nt]:
@@ -32,10 +26,7 @@ def compute_first(grammar):
                             first[nt].add(symbol)
 
                             changed = True
-
                         break
-
-
                     else:
 
                         before = len(first[nt])
@@ -49,10 +40,7 @@ def compute_first(grammar):
                         if len(first[nt]) > before:
 
                             changed = True
-
     return first
-
-
 
 def compute_follow(grammar, first, start_symbol):
 

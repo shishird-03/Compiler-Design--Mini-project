@@ -1,7 +1,6 @@
 import ply.lex as lex
 from tabulate import tabulate
 import ply.yacc as yacc
-
 # ---------------- LEXER ----------------
 reserved = {
     'int':'DATATYPE',
@@ -12,11 +11,9 @@ reserved = {
     'end':'END',
     'return':'RETURN'
 }
-
 tokens = [
     'ID','NUMBER','LPAR','RPAR','SEMI','PLUS','DIV','ASSIGNOP','GT'
 ] + list(set(reserved.values()))
-
 t_LPAR = r'\('
 t_RPAR = r'\)'
 t_SEMI = r';'
@@ -25,113 +22,66 @@ t_DIV = r'/'
 t_ASSIGNOP = r'='
 t_GT = r'>'
 t_ignore = ' \t\r'
-
-
 def t_ID(t):
     r'[A-Za-z_][A-Za-z0-9_]*'
     t.type = reserved.get(t.value, 'ID')
     return t
-
-
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
-
-
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-
-
 def t_error(t):
     print(f'Illegal character {t.value[0]}')
     t.lexer.skip(1)
-
 lexer = lex.lex()
-
 # ---------------- PARSER (LALR) ----------------
 start = 'program'
-
 precedence = (
     ('left', 'PLUS'),
     ('left', 'DIV'),
 )
-
-
 def p_program(p):
     'program : DATATYPE MAIN LPAR RPAR BEGIN stmtblock END'
     print('Valid Program')
-
-
 def p_stmtblock_multi(p):
     'stmtblock : stmt stmtblock'
-
-
 def p_stmtblock_empty(p):
     'stmtblock : '
-
-
 def p_stmt_decl(p):
     'stmt : decl'
-
-
 def p_stmt_assign(p):
     'stmt : assign'
-
-
 def p_stmt_while(p):
     'stmt : whilestmt'
-
-
 def p_stmt_return(p):
     'stmt : returnstmt'
-
-
 def p_decl(p):
     'decl : DATATYPE ID ASSIGNOP NUMBER SEMI'
-
-
 def p_assign(p):
     'assign : ID ASSIGNOP expr SEMI'
-
-
 def p_expr_plus(p):
     'expr : ID PLUS NUMBER'
-
-
 def p_expr_div(p):
     'expr : ID DIV NUMBER'
-
-
 def p_expr_num(p):
     'expr : NUMBER'
-
-
 def p_expr_id(p):
     'expr : ID'
-
-
 def p_whilestmt(p):
     'whilestmt : WHILE LPAR cond RPAR stmtblock END WHILE'
-
-
 def p_cond(p):
     'cond : ID GT NUMBER'
-
-
 def p_returnstmt(p):
     'returnstmt : RETURN ID SEMI'
-
-
 def p_error(p):
     if p:
         print(f'Syntax error at token {p.type}, value {p.value}')
     else:
         print('Syntax error at EOF')
-
 parser = yacc.yacc(method='LALR')
-
 # Simple parse tree node helper
 class Node:
     def __init__(self, name, children=None):
@@ -144,7 +94,6 @@ class Node:
                 c.show(level+1)
             else:
                 print('  ' * (level+1) + str(c))
-
 def run_lalr_parser(filename='input.txt'):
     with open(filename, 'r') as f:
         data = f.read()
@@ -163,7 +112,6 @@ def run_lalr_parser(filename='input.txt'):
         ['89', 'r2', 'r2', 'r2', '', '']
     ]
     print(tabulate(rows, headers=headers, tablefmt='grid'))
-
     if __name__ == '__main__':
         run_lalr_parser()
         print('| State | Action (sample)      | Goto       |')
@@ -181,7 +129,6 @@ def run_lalr_parser(filename='input.txt'):
 def parse_input_string():
     print("\nSTRING PARSING USING LALR:\n")
     s = input("Enter input string (example: id=id+1;): ").strip()
-
      # ---------------- CASE 1 ----------------
     if s == "id=id+1;":
         steps = [
@@ -195,7 +142,6 @@ def parse_input_string():
             ("0EXPR8;9", "$", "Reduce ASSIGN"),
             ("0S1", "$", "ACCEPT")
         ]
-
     # ---------------- CASE 2 ----------------
     elif s == "n=n/2;":
         steps = [
@@ -209,7 +155,6 @@ def parse_input_string():
             ("0EXPR8;9", "$", "Reduce ASSIGN"),
             ("0S1", "$", "ACCEPT")
         ]
-
     # ---------------- CASE 3 ----------------
     elif s == "return count;":
         steps = [
@@ -219,7 +164,6 @@ def parse_input_string():
             ("0R4id5;6", "$", "Reduce RETURNSTMT"),
             ("0S1", "$", "ACCEPT")
         ]
-
     # ---------------- CASE 4 ----------------
     elif s == "count=count+1;":
         steps = [
@@ -233,17 +177,15 @@ def parse_input_string():
             ("0EXPR8;9", "$", "Reduce ASSIGN"),
             ("0S1", "$", "ACCEPT")
         ]
-
     # ---------------- INVALID ----------------
     else:
         steps = [
             ("0", s + "$", "ERROR")
         ]
-
     for row in steps:
         print("{:<20}{:<25}{:<25}".format(*row))
 
     if steps[-1][2] == "ACCEPT":
-        print("\n✅ STRING ACCEPTED")
+        print("\n STRING ACCEPTED")
     else:
-        print("\n❌ STRING REJECTED")
+        print("\n STRING REJECTED")
